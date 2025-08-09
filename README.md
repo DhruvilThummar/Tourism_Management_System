@@ -1,28 +1,28 @@
 # TourEase - Tourism Management System (Java + MySQL)
 
 ## 📌 Overview
-**TourEase** is a Java-based Tourism Management System that allows users to book tours, accommodations, and transportation easily.  
-It supports admin and travel agent roles for efficient management and uses **MySQL** as the database.
+**TourEase** is a Java-based Tourism Management System that allows users to easily book tours, accommodations, and transportation.  
+It supports **Admin**, **Travel Agent**, and **Customer** roles for efficient management and uses **MySQL** for data storage.
 
 ## ✨ Features
-- 🧳 **Tour Booking** – Reserve tours and travel packages.  
-- 🏨 **Accommodation Management** – Manage hotels and stays.  
-- 🚍 **Transport Booking** – Schedule buses, flights, and cars.  
-- 📅 **Itinerary Planning** – Plan travel schedules with data structures.  
-- 👨‍💼 **Role-based Access** – Admin, Travel Agent, and Customer logins.  
-- 🗄 **Database Integration** – Store customer and travel data in MySQL.
+- 🧳 **Tour Booking** – Reserve tours and travel packages  
+- 🏨 **Accommodation Management** – Manage hotels and stays  
+- 🚍 **Transport Booking** – Schedule buses, flights, and cars  
+- 📅 **Itinerary Planning** – Plan travel schedules using data structures  
+- 👨‍💼 **Role-based Access** – Admin, Travel Agent, and Customer logins  
+- 🗄 **Database Integration** – Store customer and travel data in MySQL  
 
 ## ⚙️ Technologies Used
 - **Java** – Core project logic  
 - **MySQL** – Database  
 - **JDBC** – Database connectivity  
-- **Collections & Data Structures** – For itinerary and booking management
+- **Collections & Data Structures** – For itinerary and booking management  
 
 ## 📂 Folder Structure
-Tourism_Management_System/
-├── src/
-│ ├── Tourism_Management_System/
-│ │ ├── DBMS/
+-Tourism_Management_System/
+-├── src/
+-│ ├── Tourism_Management_System/
+-│ │ ├── DBMS/
 │ │ │ └── DBMS.java
 │ │ ├── Main/
 │ │ │ └── Main.java
@@ -38,10 +38,14 @@ Tourism_Management_System/
 │ └── tourism_db.sql
 └── README.md
 
+bash
+Copy
+Edit
+
 ## 🚀 How to Run
 
-### 1. Compile the Java Files
-Make sure you include the MySQL JDBC driver (mysql-connector-java.jar) in your classpath.
+### 1️⃣ Compile the Java Files  
+Make sure you include the MySQL JDBC driver (`mysql-connector-java.jar`) in your classpath.
 
 **Linux / macOS**
 ```bash
@@ -49,53 +53,62 @@ cd src
 javac -cp ".:/path/to/mysql-connector-java.jar" Tourism_Management_System/Main/Main.java
 Windows (Command Prompt)
 
+cmd
+Copy
+Edit
 cd src
 javac -cp ".;C:\path\to\mysql-connector-java.jar" Tourism_Management_System\Main\Main.java
-
-⚡ Pro Tip: Put the JDBC driver into a lib/ folder inside your project and use:
-
+💡 Tip: Put the JDBC driver in a lib/ folder inside your project and use:
 Linux/macOS: -cp ".:lib/mysql-connector-java.jar"
-
 Windows: -cp ".;lib\mysql-connector-java.jar"
 
-2. Run the Application
+2️⃣ Run the Application
 Linux / macOS
 
+bash
+Copy
+Edit
 java -cp ".:/path/to/mysql-connector-java.jar" src.Tourism_Management_System.Main.Main
 Windows (Command Prompt)
 
-c
+cmd
 Copy
 Edit
 java -cp ".;C:\path\to\mysql-connector-java.jar" src.Tourism_Management_System.Main.Main
 📌 Future Enhancements
-Add a web interface using HTML/CSS/JavaScript
+🌐 Add a web interface using HTML/CSS/JavaScript
 
-Implement payment gateway integration
+💳 Integrate payment gateway support
 
-Include real-time booking status updates
+🔄 Real-time booking status updates
 
-##📝 Usage
-When the app runs, you'll see a main menu for login and signup. Sample credentials used in the seed SQL:
+📝 Usage
+When you run the application, you will see the main menu where you can log in or sign up.
+
+Sample Credentials (from seed.sql):
 
 Admin
 
+makefile
+Copy
+Edit
 Username: admin1
-
 Password: adminpass
-
 Travel Agent
 
+makefile
+Copy
+Edit
 Username: agentli
-
 Password: agentpass
-
 Customer
 
+makefile
+Copy
+Edit
 Username: johndoe
-
 Password: custpass
+You can also use the signup option to create new users for any of the roles.
 
-You can also create new users via the signup option.
-
-💡 Developed by Dhruvil Thummar
+👨‍💻 Developed By
+Dhruvil Thummar

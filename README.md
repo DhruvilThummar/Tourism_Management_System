@@ -90,8 +90,6 @@ Sample Credentials (from tourism_db.sql):
 
 ```bash
 makefile
-Copy
-Edit
 Username: admin1
 Password: adminpass
 Travel Agent
@@ -100,8 +98,6 @@ Travel Agent
 ### Travel Agent
 ```bash
 makefile
-Copy
-Edit
 Username: agentli
 Password: agentpass
 Customer
@@ -110,12 +106,10 @@ Customer
 ### Customer
 ```bash
 makefile
-Copy
-Edit
 Username: johndoe
 Password: custpass
 ```
-####You can also use the signup option to create new users for any of the roles.
+-You can also use the signup option to create new users for any of the roles.
 
 ##👨‍💻 Developed By
 **Dhruvil Thummar**

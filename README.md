@@ -19,28 +19,26 @@ It supports **Admin**, **Travel Agent**, and **Customer** roles for efficient ma
 - **Collections & Data Structures** – For itinerary and booking management  
 
 ## 📂 Folder Structure
--Tourism_Management_System/
--├── src/
--│ ├── Tourism_Management_System/
--│ │ ├── DBMS/
-│ │ │ └── DBMS.java
-│ │ ├── Main/
-│ │ │ └── Main.java
-│ │ ├── Tasks/
-│ │ │ └── BookingTask.java
-│ │ ├── Tour_Info/
-│ │ │ └── Tour_Info.java
-│ │ ├── User_Info/
-│ │ │ ├── Admin.java
-│ │ │ ├── Customer.java
-│ │ │ └── TravelAgent.java
-│ │ └── ColorCodes.java
-│ └── tourism_db.sql
+```bash
+Tourism_Management_System/
+├── src/
+│   ├── Tourism_Management_System/
+│   │   ├── DBMS/
+│   │   │   ├── DBMS.java
+│   │   ├── Main/
+│   │   │   └── Main.java
+│   │   ├── Tasks/
+│   │   │   └── BookingTask.java
+│   │   ├── Tour_Info/
+│   │   │   └── Tour_Info.java
+│   │   ├── User_Info/
+│   │   │   ├── Admin.java
+│   │   │   ├── Customer.java
+│   │   │   └── TravelAgent.java
+│   │   └── ColorCodes.java
+│   └── tourism_db.sql
 └── README.md
-
-bash
-Copy
-Edit
+```
 
 ## 🚀 How to Run
 
@@ -51,64 +49,73 @@ Make sure you include the MySQL JDBC driver (`mysql-connector-java.jar`) in your
 ```bash
 cd src
 javac -cp ".:/path/to/mysql-connector-java.jar" Tourism_Management_System/Main/Main.java
-Windows (Command Prompt)
-
-cmd
-Copy
-Edit
+```
+**Windows (Command Prompt)**
+```bash
 cd src
 javac -cp ".;C:\path\to\mysql-connector-java.jar" Tourism_Management_System\Main\Main.java
-💡 Tip: Put the JDBC driver in a lib/ folder inside your project and use:
-Linux/macOS: -cp ".:lib/mysql-connector-java.jar"
-Windows: -cp ".;lib\mysql-connector-java.jar"
+```
+💡 **Tip**: Put the JDBC driver in a lib/ folder inside your project and use:
+***Linux/macOS:***
+```bash 
+-cp ".:lib/mysql-connector-java.jar"
+```
+***Windows:***
+```bash 
+-cp ".;lib\mysql-connector-java.jar"
+```
 
-2️⃣ Run the Application
+###2️⃣ Run the Application
 Linux / macOS
 
-bash
-Copy
-Edit
+```bash
 java -cp ".:/path/to/mysql-connector-java.jar" src.Tourism_Management_System.Main.Main
 Windows (Command Prompt)
+```
 
-cmd
-Copy
-Edit
+```bash
 java -cp ".;C:\path\to\mysql-connector-java.jar" src.Tourism_Management_System.Main.Main
-📌 Future Enhancements
-🌐 Add a web interface using HTML/CSS/JavaScript
+```
 
-💳 Integrate payment gateway support
+## 📌 Future Enhancements
+-🌐 Add a web interface using HTML/CSS/JavaScript
+-💳 Integrate payment gateway support
+-🔄 Real-time booking status updates
 
-🔄 Real-time booking status updates
-
-📝 Usage
+## 📝 Usage
 When you run the application, you will see the main menu where you can log in or sign up.
+Sample Credentials (from tourism_db.sql):
 
-Sample Credentials (from seed.sql):
+### Admin
 
-Admin
-
+```bash
 makefile
 Copy
 Edit
 Username: admin1
 Password: adminpass
 Travel Agent
+```
 
+### Travel Agent
+```bash
 makefile
 Copy
 Edit
 Username: agentli
 Password: agentpass
 Customer
+```
 
+### Customer
+```bash
 makefile
 Copy
 Edit
 Username: johndoe
 Password: custpass
-You can also use the signup option to create new users for any of the roles.
+```
+####You can also use the signup option to create new users for any of the roles.
 
-👨‍💻 Developed By
-Dhruvil Thummar
+##👨‍💻 Developed By
+**Dhruvil Thummar**

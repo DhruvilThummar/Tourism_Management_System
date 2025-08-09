@@ -105,7 +105,7 @@ makefile
 Username: johndoe
 Password: custpass
 ```
--You can also use the signup option to create new users for any of the roles.
+- You can also use the signup option to create new users for any of the roles.
 
 ----
 ## 👨‍💻 Developed By

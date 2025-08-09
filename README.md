@@ -92,7 +92,6 @@ Sample Credentials (from tourism_db.sql):
 makefile
 Username: admin1
 Password: adminpass
-Travel Agent
 ```
 
 ### Travel Agent
@@ -100,7 +99,6 @@ Travel Agent
 makefile
 Username: agentli
 Password: agentpass
-Customer
 ```
 
 ### Customer

@@ -76,9 +76,9 @@ java -cp ".;C:\path\to\mysql-connector-java.jar" src.Tourism_Management_System.M
 ```
 
 ## 📌 Future Enhancements
--🌐 Add a web interface using HTML/CSS/JavaScript
--💳 Integrate payment gateway support
--🔄 Real-time booking status updates
+- 🌐 Add a web interface using HTML/CSS/JavaScript
+- 💳 Integrate payment gateway support
+- 🔄 Real-time booking status updates
 
 ## 📝 Usage
 When you run the application, you will see the main menu where you can log in or sign up.
@@ -106,8 +106,7 @@ Username: johndoe
 Password: custpass
 ```
 -You can also use the signup option to create new users for any of the roles.
-##
 
 ----
 ## 👨‍💻 Developed By
-**Dhruvil Thummar**
+- **Dhruvil Thummar**

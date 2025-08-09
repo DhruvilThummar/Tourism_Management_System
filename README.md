@@ -64,6 +64,7 @@ javac -cp ".;C:\path\to\mysql-connector-java.jar" Tourism_Management_System\Main
 ```bash 
 -cp ".;lib\mysql-connector-java.jar"
 ```
+----
 
 ###2️⃣ Run the Application
 Linux / macOS

@@ -66,11 +66,11 @@ javac -cp ".;C:\path\to\mysql-connector-java.jar" Tourism_Management_System\Main
 ```
 
 ### 2️⃣ Run the Application
-**Linux / macOS**
+***Linux / macOS***
 ```bash
 java -cp ".:/path/to/mysql-connector-java.jar" src.Tourism_Management_System.Main.Main
 ```
-**Windows (Command Prompt)**
+***Windows (Command Prompt)***
 ```bash
 java -cp ".;C:\path\to\mysql-connector-java.jar" src.Tourism_Management_System.Main.Main
 ```

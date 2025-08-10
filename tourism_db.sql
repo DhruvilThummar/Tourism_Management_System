@@ -139,6 +139,9 @@ ALTER TABLE `bookings`
   ADD KEY `customer_id` (`customer_id`),
   ADD KEY `agent_id` (`agent_id`);
 
+
+ALTER TABLE Bookings MODIFY booking_id INT AUTO_INCREMENT;
+
 --
 -- Indexes for table `customers`
 --
@@ -171,4 +174,3 @@ ALTER TABLE `bookings`
   ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
   ADD CONSTRAINT `bookings_ibfk_3` FOREIGN KEY (`agent_id`) REFERENCES `travelagents` (`agent_id`);
 COMMIT;
-

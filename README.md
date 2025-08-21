@@ -1,4 +1,4 @@
-# TourEase - Tourism Management System (Java + MySQL)
+# Tourism Management System (Java + MySQL)
 
 ## 📌 Overview
 **TourEase** is a Java-based Tourism Management System that allows users to easily book tours, accommodations, and transportation.  

@@ -14,8 +14,6 @@ public class DBMS {
         if (con == null) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                // Using try-with-resources for Connection is typically for individual statements,
-                // but for application-level connection, managing it explicitly is fine.
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tourism_db", "root", "");
                 System.out.println(ColorCodes.GREEN + "Database connected successfully!" + ColorCodes.RESET);
             } catch (ClassNotFoundException e) {

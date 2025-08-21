@@ -18,14 +18,11 @@ import src.Tourism_Management_System.DBMS.DBMS; // Import DBMS for usernameExist
 public class Customer {
     private String customerId;
     private String username;
-    // private String password; // Password not stored in object for security
     private String customerName;
     private String customerPhoneNo;
     private String email;
 
-    // Add an ExecutorService for managing booking threads
-    // Using a cached thread pool is suitable for tasks that are short-lived
-    // and potentially sporadic, like individual bookings.
+
     private static final ExecutorService bookingExecutor = Executors.newCachedThreadPool();
 
     public Customer(String customerId, String username, String customerName, String customerPhoneNo, String email) {
@@ -165,6 +162,75 @@ public class Customer {
             }
         } catch (SQLException e) {
             System.err.println(ColorCodes.RED + "Error viewing customer bookings: " + e.getMessage() + ColorCodes.RESET);
+        }
+    }
+
+    public void cancelBooking(Connection con, Scanner sc) {
+        System.out.print("Enter the Booking ID to cancel: ");
+        int bookingId = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        String findBookingSql = "SELECT tour_id, customer_id FROM Bookings WHERE booking_id = ? AND customer_id = ?";
+        String tourId = null;
+
+        try {
+            // Start a transaction
+            con.setAutoCommit(false);
+
+            // 1. Find the booking and ensure it belongs to this customer
+            PreparedStatement findPst = con.prepareStatement(findBookingSql);
+            findPst.setInt(1, bookingId);
+            findPst.setString(2, this.customerId);
+            ResultSet rs = findPst.executeQuery();
+
+            if (rs.next()) {
+                tourId = rs.getString("tour_id");
+            } else {
+                System.out.println(ColorCodes.RED + "Error: Booking not found or you don't have permission to cancel it."+ ColorCodes.RESET);
+                con.rollback(); // Abort transaction
+                return;
+            }
+
+            // 2. Increment available slots in the tour table
+            String updateSlotsSql = "UPDATE tour SET available_slots = available_slots + 1 WHERE tour_id = ?";
+            PreparedStatement updateSlotsPst = con.prepareStatement(updateSlotsSql);
+            updateSlotsPst.setString(1, tourId);
+            updateSlotsPst.executeUpdate();
+
+            // 3. Log the cancellation in the new 'cancellations' table
+            String logCancellationSql = "INSERT INTO cancellations (booking_id, tour_id, customer_id) VALUES (?, ?, ?)";
+            PreparedStatement logPst = con.prepareStatement(logCancellationSql);
+            logPst.setInt(1, bookingId);
+            logPst.setString(2, tourId);
+            logPst.setString(3, this.customerId);
+            logPst.executeUpdate();
+
+            // 4. Delete the original booking from the 'bookings' table
+            String deleteBookingSql = "DELETE FROM Bookings WHERE booking_id = ?";
+            PreparedStatement deletePst = con.prepareStatement(deleteBookingSql);
+            deletePst.setInt(1, bookingId);
+            int rowsAffected = deletePst.executeUpdate();
+
+            if (rowsAffected > 0) {
+                con.commit(); // Finalize the transaction
+                System.out.println(ColorCodes.YELLOW +"Booking " +ColorCodes.WHITE +  bookingId + ColorCodes.YELLOW +" has been successfully canceled."+ ColorCodes.RESET);
+            } else {
+                throw new SQLException(ColorCodes.RED +"Failed to delete the booking."+ ColorCodes.RESET);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Cancellation failed. Rolling back changes. Error: " + e.getMessage());
+            try {
+                if (con != null) con.rollback(); // Rollback on error
+            } catch (SQLException ex) {
+                System.err.println("Error during rollback: " + ex.getMessage());
+            }
+        } finally {
+            try {
+                if (con != null) con.setAutoCommit(true); // Reset auto-commit
+            } catch (SQLException e) {
+                System.err.println("Error resetting auto-commit: " + e.getMessage());
+            }
         }
     }
 

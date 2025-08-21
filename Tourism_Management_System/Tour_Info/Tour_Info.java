@@ -8,22 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import src.Tourism_Management_System.ColorCodes;
 
-/**
- * Represents a single tour in a tourist management system.
- * Includes methods for database persistence.
- * Assumed Database Schema for 'tour' table:
- * - tour_id VARCHAR(255) PRIMARY KEY
- * - tour_name VARCHAR(255)
- * - destination VARCHAR(255)
- * - duration_in_days INT
- * - price DOUBLE
- * - description TEXT
- * - max_group_size INT
- * - available_slots INT
- * - available_sites TEXT (stores a comma-separated list of sites)
- */
+
 public class Tour_Info {
 
     // --- Member Variables ---
@@ -82,11 +71,7 @@ public class Tour_Info {
 
     public boolean bookTour(Connection con) throws SQLException {
         if (this.availableSlots > 0) {
-            // It's crucial to perform this decrement and update within a transaction
-            // to avoid race conditions in a multi-threaded environment.
-            // For simplicity in this example, we directly decrement and update.
-            // In a real-world scenario, you'd use SELECT ... FOR UPDATE or
-            // optimistic locking.
+
             this.availableSlots--;
             this.update(con); // Update the tour's available slots in the DB
             return true;
@@ -145,7 +130,18 @@ public class Tour_Info {
         }
     }
 
+    // Static cache for tours
+    public static Map<String, Tour_Info> tourCache = new HashMap<>();
+
+    // Modify the load method to use the cache
     public static Tour_Info load(Connection con, String tourId) throws SQLException {
+        // If tour is in cache, return it
+        if (tourCache.containsKey(tourId)) {
+            System.out.println("(Retrieved " + tourId + " from cache)");
+            return tourCache.get(tourId);
+        }
+
+        // Otherwise, fetch from DB
         String sql = "SELECT * FROM tour WHERE tour_id = ?";
         Tour_Info tour = null;
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -156,8 +152,17 @@ public class Tour_Info {
                 }
             }
         }
+        if (tour != null) {
+            tourCache.put(tourId, tour); // Add the newly loaded tour to the cache
+        }
         return tour;
     }
+
+    // A method to clear cache if tour details are updated by an admin
+    public static void clearCache() {
+        tourCache.clear();
+    }
+
 
     public static List<Tour_Info> getAllTours(Connection con) throws SQLException {
         String sql = "SELECT * FROM tour";
@@ -190,6 +195,8 @@ public class Tour_Info {
         tour.setAvailableSlots(rs.getInt("available_slots"));
         return tour;
     }
+
+
 
     // --- Overridden Methods ---
     @Override

@@ -1,4 +1,4 @@
-package src.Tourism_Management_System.Main;
+package src.Tourism_Management_System.main;
 
 import src.Tourism_Management_System.ColorCodes;
 import src.Tourism_Management_System.DBMS.DBMS;
@@ -316,7 +316,8 @@ public class Main {
             System.out.println(ColorCodes.YELLOW + "2. " + ColorCodes.RESET + ColorCodes.WHITE + "Book a Tour" + ColorCodes.RESET);
             System.out.println(ColorCodes.YELLOW + "3. " + ColorCodes.RESET + ColorCodes.WHITE + "View My Bookings" + ColorCodes.RESET);
             System.out.println(ColorCodes.YELLOW + "4. " + ColorCodes.RESET + ColorCodes.WHITE + "Update Profile" + ColorCodes.RESET);
-            System.out.println(ColorCodes.YELLOW + "5. " + ColorCodes.RESET + ColorCodes.RED + "Logout" + ColorCodes.RESET);
+            System.out.println(ColorCodes.YELLOW + "5. " + ColorCodes.RESET + ColorCodes.WHITE + "Cancel a Booking" + ColorCodes.RESET);
+            System.out.println(ColorCodes.YELLOW + "6. " + ColorCodes.RESET + ColorCodes.RED + "Logout" + ColorCodes.RESET);
             System.out.print(ColorCodes.BOLD + ColorCodes.CYAN + "Enter your choice: " + ColorCodes.RESET);
             int choice = -1;
             try {
@@ -333,7 +334,8 @@ public class Main {
                 case 2 -> customer.bookTour(con, sc);
                 case 3 -> customer.viewMyBookings(con);
                 case 4 -> customer.updateProfile(con, sc);
-                case 5 -> {
+                case 5 -> customer.cancelBooking(con, sc);
+                case 6 -> {
                     System.out.println(ColorCodes.WHITE + "Logging out " + customer.getUsername() + "..." + ColorCodes.RESET);
                     customerMenuRunning = false;
                 }

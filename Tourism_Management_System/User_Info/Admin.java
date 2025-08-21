@@ -1,24 +1,23 @@
 package src.Tourism_Management_System.User_Info;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import src.Tourism_Management_System.ColorCodes;
+import src.Tourism_Management_System.DBMS.DBMS;
+import src.Tourism_Management_System.Tour_Info.Tour_Info;
+
+import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.UUID; // For generating adminId
-import src.Tourism_Management_System.ColorCodes;
-import src.Tourism_Management_System.Tour_Info.Tour_Info;
-import src.Tourism_Management_System.DBMS.DBMS; // Import DBMS for usernameExists
+import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.List;
 
 public class Admin {
-    private String adminId;
-    private String username;
+    private final String adminId;
+    private final String username;
     private String name;
     private String phoneNo;
-    // Password is not stored in object for security reasons, only for login method
 
     public Admin(String adminId, String username, String name, String phoneNo) {
         this.adminId = adminId;
@@ -168,6 +167,8 @@ public class Admin {
                             System.out.println(ColorCodes.BOLD + ColorCodes.WHITE + "\n--- All Tours ---" + ColorCodes.RESET);
                             tours.forEach(System.out::println);
                             System.out.println(ColorCodes.BOLD + ColorCodes.WHITE + "-----------------\n" + ColorCodes.RESET);
+                            System.out.println(" ");
+                            viewUniqueDestinations(con);
                         }
                     }
                     case 3 -> {
@@ -245,6 +246,7 @@ public class Admin {
 
                         tourToUpdate.update(con);
                         System.out.println(ColorCodes.GREEN + "Tour updated successfully!" + ColorCodes.RESET);
+                        Tour_Info.clearCache();
                     }
                     case 4 -> {
                         System.out.print(ColorCodes.CYAN + "Enter Tour ID to delete: " + ColorCodes.RESET);
@@ -262,6 +264,7 @@ public class Admin {
                         } else {
                             System.out.println(ColorCodes.WHITE + "Tour deletion cancelled." + ColorCodes.RESET);
                         }
+                        Tour_Info.clearCache();
                     }
                     case 5 -> managingTours = false;
                     default -> System.out.println(ColorCodes.RED + "Invalid choice. Please try again." + ColorCodes.RESET);
@@ -281,7 +284,8 @@ public class Admin {
             System.out.println(ColorCodes.YELLOW + "1. " + ColorCodes.WHITE + "View All Admins" + ColorCodes.RESET);
             System.out.println(ColorCodes.YELLOW + "2. " + ColorCodes.WHITE + "View All Travel Agents" + ColorCodes.RESET);
             System.out.println(ColorCodes.YELLOW + "3. " + ColorCodes.WHITE + "View All Customers" + ColorCodes.RESET);
-            System.out.println(ColorCodes.YELLOW + "4. " + ColorCodes.RED + "Back to Admin Dashboard" + ColorCodes.RESET);
+            System.out.println(ColorCodes.YELLOW + "4. " + ColorCodes.WHITE + "View Customers Without Bookings" + ColorCodes.RESET);
+            System.out.println(ColorCodes.YELLOW + "5. " + ColorCodes.RED + "Back to Admin Dashboard" + ColorCodes.RESET);
             System.out.print(ColorCodes.BOLD + ColorCodes.CYAN + "Enter your choice: " + ColorCodes.RESET);
             int choice = -1;
             try {
@@ -298,7 +302,8 @@ public class Admin {
                     case 1 -> viewAllUsers("Admins", con);
                     case 2 -> viewAllUsers("TravelAgents", con);
                     case 3 -> viewAllUsers("Customers", con);
-                    case 4 -> managingUsers = false;
+                    case 4 -> viewCustomersWithoutBookings(con);
+                    case 5 -> managingUsers = false;
                     default -> System.out.println(ColorCodes.RED + "Invalid choice. Please try again." + ColorCodes.RESET);
                 }
             } catch (SQLException e) {
@@ -387,6 +392,39 @@ public class Admin {
 
         } catch (SQLException e) {
             System.err.println(ColorCodes.RED + "Error generating reports: " + e.getMessage() + ColorCodes.RESET);
+        }
+    }
+
+    public void viewCustomersWithoutBookings(Connection con) throws SQLException {
+        String query = "SELECT c.customer_id, c.username, c.customer_name " +
+                "FROM Customers c " +
+                "LEFT JOIN Bookings b ON c.customer_id = b.customer_id " +
+                "WHERE b.booking_id IS NULL";
+
+        System.out.println("\n--- Customers Who Have Not Made Any Bookings ---");
+        try (Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            if (!rs.isBeforeFirst()) {
+                System.out.println(ColorCodes.BOLD + ColorCodes.CYAN +"All customers have made at least one booking." + ColorCodes.RESET);
+                return;
+            }
+            while (rs.next()) {
+                System.out.println(ColorCodes.YELLOW +"ID: " +ColorCodes.WHITE + rs.getString("customer_id") +ColorCodes.YELLOW + ", Username: " +ColorCodes.WHITE + rs.getString("username")+ ColorCodes.RESET);
+            }
+        }
+    }
+
+    public void viewUniqueDestinations(Connection con) throws SQLException {
+        Set<String> uniqueDestinations = new HashSet<>();
+        List<Tour_Info> allTours = Tour_Info.getAllTours(con);
+
+        for (Tour_Info tour : allTours) {
+            uniqueDestinations.add(tour.getDestination());
+        }
+
+        System.out.println("\n--- All Unique Destinations Offered ---");
+        for (String destination : uniqueDestinations) {
+            System.out.println(ColorCodes.BOLD + ColorCodes.WHITE +"- " + destination+ ColorCodes.RESET);
         }
     }
 

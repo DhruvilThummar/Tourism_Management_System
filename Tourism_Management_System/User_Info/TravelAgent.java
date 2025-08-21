@@ -20,7 +20,6 @@ public class TravelAgent {
     private String agentName;
     private String agentPhoneNo;
     private String username;
-    // private String password; // Password not stored in object for security
 
     // Add an ExecutorService for managing booking threads
     private static final ExecutorService agentBookingExecutor = Executors.newCachedThreadPool();
@@ -123,7 +122,9 @@ public class TravelAgent {
 
             System.out.print(ColorCodes.CYAN + "Enter Customer Username (existing or new to create): " + ColorCodes.RESET);
             String customerUsername = sc.nextLine();
-            Customer customer = Customer.login(customerUsername, "dummy_password", con); // Login with dummy password for initial check
+            System.out.print(ColorCodes.CYAN + "Enter Customer Password (existing or new to create): " + ColorCodes.RESET);
+            String customerpass=sc.nextLine();
+            Customer customer = Customer.login(customerUsername, customerpass, con); // Login with dummy password for initial check
 
             if (customer == null) {
                 System.out.println(ColorCodes.YELLOW + "Customer not found. Let's create a new customer account." + ColorCodes.RESET);
